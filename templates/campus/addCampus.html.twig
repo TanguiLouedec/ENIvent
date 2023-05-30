@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+
+{%block title%}
+    {{ parent() }} | Add Campus
+{% endblock %}
+
+{% block body %}
+    {% embed'views/form/default_form.html.twig' with {'form' : campusForm} %}
+        {% block h2 %} Add a new campus {% endblock %}
+        {% block buttonLabel %}Add a new one {% endblock %}
+    {% endembed %}
+{% endblock %}

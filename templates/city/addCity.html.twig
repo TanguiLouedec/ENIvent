@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+
+{%block title%}
+    {{ parent() }} | Add City
+{% endblock %}
+
+{% block body %}
+    {% embed'views/form/default_form.html.twig' with {'form' : cityForm} %}
+        {% block h2 %} Add a new city {% endblock %}
+        {% block buttonLabel %}Add a new one {% endblock %}
+    {% endembed %}
+{% endblock %}

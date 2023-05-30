@@ -1,0 +1,11 @@
+{%  form_theme form 'views/theme/form_theme.htlm.twig' %}
+
+<h2>
+    {% block h2 %}{% endblock %}
+</h2>
+    {{ form_start(form) }}
+    {{ form_widget(form) }}
+<button>
+    {% block buttonLabel %}{% endblock %}
+</button>
+    {{ form_end(form) }}
