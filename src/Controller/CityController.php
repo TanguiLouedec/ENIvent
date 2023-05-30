@@ -10,8 +10,8 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class CityController extends AbstractController
 {
-    #[Route('/city', name: 'app_city')]
-    public function index(): Response
+    #[Route('/city', name: 'add_city')]
+    public function addCity(): Response
     {
 
         $cityForm = $this->createForm(CityType::class);
@@ -21,5 +21,17 @@ class CityController extends AbstractController
             'cityForm' => $cityForm->createView()
 
             ]);
+    }
+    #[Route('/city', name: 'show_city')]
+    public function showCity(): Response
+    {
+
+
+
+        return $this->render('city/showCity.html.twig', [
+
+
+
+        ]);
     }
 }
