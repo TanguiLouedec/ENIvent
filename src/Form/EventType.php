@@ -6,6 +6,7 @@ use App\Entity\Campus;
 use App\Entity\City;
 use App\Entity\Event;
 use App\Entity\Location;
+use App\Entity\State;
 use Doctrine\ORM\Mapping\Entity;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
@@ -36,11 +37,8 @@ class EventType extends AbstractType
             ->add('infoEvent', TextareaType::class, ['label' => 'Description and information'])
             ->add('campus', EntityType::class,['class'=>Campus::class,'choice_label'=>'name'])
             ->add('city', EntityType::class, ['mapped'=>false,'class'=>City::class,'choice_label'=>'name'])
-            ->add('location', EntityType::class, ['mapped'=>false,'class'=>Location::class,'choice_label'=>'name'])
-            ->add('street', TextType::class, ['mapped'=>false])
-            ->add('zipcode', TextType::class, ['mapped'=>false,'label' => 'Zip code'])
-            ->add('latitude', TextType::class, ['mapped'=>false])
-            ->add('longitude', TextType::class, ['mapped'=>false])
+            ->add('location', EntityType::class, ['class'=>Location::class,'choice_label'=>'name'])
+            ->add('state', EntityType::class,['class'=>State::class,'choice_label'=>'tag'])
 
         ;
     }

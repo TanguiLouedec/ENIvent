@@ -15,17 +15,13 @@
     {{ form_row(eventForm.infoEvent) }}
     {{ form_row(eventForm.campus) }}
     {{ form_row(eventForm.city) }}
+    <div hidden="hidden">
+    {{ form_row(eventForm.state) }}
+    </div>
     {{ form_row(eventForm.location) }}
-    <a href="{{ path('location_add') }}" class="btn btn-primary">Add Location</a>
-    {{ form_row(eventForm.street) }}
-    {{ form_row(eventForm.zipcode) }}
-    {{ form_row(eventForm.latitude) }}
-    {{ form_row(eventForm.longitude) }}
-    {{ form_rest(eventForm) }}
+    <a href="{{ path('location_add') }}" class="btn btn-primary" id="addLocationButton" target="_blank">Add new location</a><br>
+    {% block button %}
+            <button>Add event</button>
+    {% endblock %}
     {{ form_end(eventForm) }}
-        {% block button %}
-            <button>Save event</button>
-            <button>Publish event</button>
-            <button>Cancel</button>
-        {% endblock %}
 {% endblock %}
