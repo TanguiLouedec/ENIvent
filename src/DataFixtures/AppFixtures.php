@@ -55,6 +55,7 @@ class AppFixtures extends Fixture
 
         for ($i=0; $i<25; $i++) {
             $user = new User();
+            $user->setNickname($generator->name);
             $user->setFirstName($generator->firstName);
             $user->setLastName($generator->lastName);
             $user->setEmail($generator->email);
@@ -65,6 +66,7 @@ class AppFixtures extends Fixture
 //        $campus->setName()
 //            ->setId();
             $user->setCampus($campus);
+            $user->setPhoneNumber($generator->phoneNumber);
 
             //Pass
 
@@ -87,7 +89,9 @@ class AppFixtures extends Fixture
             ->setEmail("test@test.fr")
             ->setActive("Active")
             ->setRoles(["ROLE_ADMIN"])
-            ->setCampus($campus);
+            ->setCampus($campus)
+            ->setPhoneNumber("0123456789")
+            ->setNickname("chaussettes");
 
         $user->setPassword($encoded);
         $manager->persist($user);
