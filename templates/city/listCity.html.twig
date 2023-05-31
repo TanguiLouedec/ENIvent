@@ -1,9 +1,23 @@
 {% extends 'base.html.twig' %}
 
-{% block body %}
-
+{%block title%}
+    {{ parent() }} | List of Cities
 {% endblock %}
 
-{% block title %}
+{% block body %}
+    <h2>List of Cities !</h2>
+
+    <section>
+
+    {% for c in city %}
+        <article>
+            <a>
+                <img src="{{ city.name }}" alt="name of city : {{ city.name }}">
+            </a>
+        </article>
+
+    {% endfor %}
+
+
 
 {% endblock %}
