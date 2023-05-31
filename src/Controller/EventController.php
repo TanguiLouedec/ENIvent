@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Event;
 use App\Entity\Location;
+use App\Entity\State;
 use App\Form\EventType;
 use App\Repository\EventRepository;
 use App\Repository\LocationRepository;
@@ -35,7 +36,7 @@ class EventController extends AbstractController
         if($eventForm->isSubmitted()&&$eventForm->isValid()){
             $eventRepository->save($event, true);
             $this->addFlash('success','Event successfully added !');
-            return $this->redirectToRoute('event_detail',['id'=>$event->getId()]);
+            return $this->redirectToRoute('main_home',['id'=>$event->getId()]);
         }
         return $this->render('event/add.html.twig', ['eventForm' => $eventForm->createView()]);
     }
