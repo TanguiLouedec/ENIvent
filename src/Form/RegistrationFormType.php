@@ -13,63 +13,44 @@ use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
+use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\IsTrue;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
+use function Sodium\add;
 
 class RegistrationFormType extends AbstractType
 {
-
-    private $entityManager;
-    public function __construct(EntityManagerInterface $entityManager)
-    {
-        $this->entityManager = $entityManager;
-    }
-
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
+            ->add('email')
+            ->add('nickname')
+            ->add('firstname')
+            ->add('lastname')
+            ->add('phoneNumber')
+            ->add('campus', EntityType::class, [
+                'class' => Campus::class,
+                'choice_label' => 'name',
+                'query_builder' => function(CampusRepository $campusRepository) {
+                    $qb = $campusRepository->createQueryBuilder('c');
+                    return $qb;
+                }
+            ])
+            ->add('password', RepeatedType::class, [
+                'type' => PasswordType::class,
+                'invalid_message' => 'The password fields must match.',
+                'options' => ['attr' => ['class' => 'password-field']],
+                'required' => true,
+                'first_options'  => ['label' => 'Password'],
+                'second_options' => ['label' => 'Confirm password'],
+            ])
             ->add('profilePicture', FileType::class, [
                 'mapped' => false
             ])
-            ->add('email')
-            ->add('firstname')
-            ->add('lastname')
-            ->add('campus', ChoiceType::class, [
-                'choices' => $this->getCampus()
-            ])
-            ->add('plainPassword', PasswordType::class, [
-                // instead of being set onto the object directly,
-                // this is read and encoded in the controller
-                'mapped' => false,
-                'attr' => ['autocomplete' => 'new-password'],
-                'constraints' => [
-                    new NotBlank([
-                        'message' => 'Please enter a password',
-                    ]),
-                    new Length([
-                        'min' => 6,
-                        'minMessage' => 'Your password should be at least {{ limit }} characters',
-                        // max length allowed by Symfony for security reasons
-                        'max' => 4096,
-                    ]),
-                ],
-            ])
         ;
-    }
-
-    private function getCampus()
-    {
-        $repository = $this->entityManager->getRepository(Campus::class);
-        $campus = $repository->findAll();
-        $choices = array_reduce($campus, function ($result, $campus) {
-            $result[$campus->getName()] = $campus->getId();
-            return $result;
-        }, []);
-        //dd($choices);
-        return $choices;
     }
     public function configureOptions(OptionsResolver $resolver): void
     {
