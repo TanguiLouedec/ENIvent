@@ -1,0 +1,14 @@
+{% extends '/base.html.twig' %}
+
+{% block title %}
+{{ parent() }} || Add Event
+{% endblock %}
+
+{% block body %}
+    {% embed 'views/form/default_form.html.twig' with {'form' : eventForm} %}
+        {% block h2 %} Add a new event {% endblock %}
+        {% block buttonLabel1 %} Save event {% endblock %}
+        {% block buttonLabel2 %} Publish event {% endblock %}
+        {% block buttonLabel3 %} Cancel {% endblock %}
+    {% endembed %}
+{% endblock %}
