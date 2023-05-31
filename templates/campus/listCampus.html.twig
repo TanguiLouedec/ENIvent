@@ -1,0 +1,23 @@
+{%  extends 'base.html.twig' %}
+
+{%block title%}
+    {{ parent() }} | List of Campuses
+{% endblock %}
+
+{% block body %}
+    <h2>List of Campuses !</h2>
+
+    <section>
+
+    {% for c in campus %}
+        <article>
+            <a>
+                <img src="{{ campus.name }}" alt="nom du campus : {{ campus.name }}">
+            </a>
+        </article>
+
+    {% endfor %}
+
+
+
+{% endblock %}
