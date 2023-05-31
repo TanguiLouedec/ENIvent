@@ -34,18 +34,6 @@ class City
         return $this->id;
     }
 
-    public function getIdCity(): ?int
-    {
-        return $this->idCity;
-    }
-
-    public function setIdCity(int $idCity): self
-    {
-        $this->idCity = $idCity;
-
-        return $this;
-    }
-
     public function getName(): ?string
     {
         return $this->name;
