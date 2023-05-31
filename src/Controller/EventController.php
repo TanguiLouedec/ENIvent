@@ -53,4 +53,20 @@ class EventController extends AbstractController
 
     }
 
+    #[Route('/update/{id}', name:'update')]
+    public function update(int $id, EventRepository $eventRepository,Request $request){
+
+        $event = $eventRepository->find($id);
+        $eventForm = $this->createForm(EventType::class,$event);
+        $eventForm->handleRequest($request);
+
+        if($eventForm->isSubmitted()&&$eventForm->isValid()){
+            $eventRepository->save($event, true);
+            $this->addFlash('success','Event successfully updated !');
+            return $this->redirectToRoute('event_detail',['id'=>$event->getId()]);
+        }
+        return $this->render('event/update.html.twig',['eventFormUpdate'=>$eventForm->createView()]);
+
+    }
+
 }

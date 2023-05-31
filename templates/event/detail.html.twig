@@ -7,10 +7,19 @@
 {% block body %}
 
     <h3>{{ event.name }}</h3>
-    <div>Event date : {{ event.dateTimeStart | date('d-m-Y') }}</div>
-
-
-
+    <div>Event date & time : {{ event.dateTimeStart | date('d-m-Y') }}</div>
+    <div>Event limit registration date : {{ event.dateLimitRegistration | date('d-m-Y') }}</div>
+    <div>Number of places : {{ event.numMaxRegistration }} </div>
+    <div>Event duration : {{ event.duration }} </div>
+    <div>Description & information : {{ event.infoEvent }} </div>
+    <div>Campus : {{ event.campus.name }} </div>
+    <div>Location : {{ event.location.name }} </div>
+    <div>City : {{ event.location.city.name }} </div>
+    <div>Street : {{ event.location.street }} </div>
+    <div>Zip Code : {{ event.location.city.zipCode }} </div>
+    <div>Latitude : {{ event.location.latitude }} </div>
+    <div>Longitude : {{ event.location.longitude}} </div>
     {% block button %}
+        <a class="link_button" href="{{ path('event_update', {'id':event.id}) }}">Edit</a>
     {% endblock %}
 {% endblock %}

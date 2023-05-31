@@ -1,0 +1,27 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    {{ parent() }} | Update
+{% endblock %}
+
+{% block body %}
+    {{ form_start(eventFormUpdate) }}
+    {{ form_row(eventFormUpdate.name) }}
+    {{ form_row(eventFormUpdate.dateTimeStart) }}
+    {{ form_row(eventFormUpdate.dateLimitRegistration) }}
+    {{ form_row(eventFormUpdate.numMaxRegistration) }}
+    {{ form_row(eventFormUpdate.duration) }}
+    {{ form_row(eventFormUpdate.infoEvent) }}
+    {{ form_row(eventFormUpdate.campus) }}
+    {{ form_row(eventFormUpdate.city) }}
+    <div hidden="hidden">
+        {{ form_row(eventFormUpdate.state) }}
+    </div>
+    {{ form_row(eventFormUpdate.location) }}
+    <a href="{{ path('location_add') }}" class="btn btn-primary" id="addLocationButton" target="_blank">Add new location</a><br>
+    {% block button %}
+        <button>Update</button>
+    {% endblock %}
+    {{ form_end(eventFormUpdate) }}
+{% endblock %}
+
