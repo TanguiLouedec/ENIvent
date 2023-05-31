@@ -36,9 +36,21 @@ class EventController extends AbstractController
         if($eventForm->isSubmitted()&&$eventForm->isValid()){
             $eventRepository->save($event, true);
             $this->addFlash('success','Event successfully added !');
-            return $this->redirectToRoute('main_home',['id'=>$event->getId()]);
+            return $this->redirectToRoute('event_detail',['id'=>$event->getId()]);
         }
         return $this->render('event/add.html.twig', ['eventForm' => $eventForm->createView()]);
+    }
+
+    #[Route('/detail/{id}', name:'detail')]
+    public function view(int $id, EventRepository $eventRepository):Response{
+
+        $event = $eventRepository->find($id);
+        if(!$event){
+            throw $this->createNotFoundException("Oops! Event not found");
+        }
+
+        return $this->render('event/detail.html.twig', ['event'=>$event]);
+
     }
 
 }

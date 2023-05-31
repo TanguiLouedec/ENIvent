@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    {{ parent() }} || View Event
+{% endblock %}
+
+{% block body %}
+
+    <h3>{{ event.name }}</h3>
+    <div>Event date : {{ event.dateTimeStart | date('d-m-Y') }}</div>
+
+
+
+    {% block button %}
+    {% endblock %}
+{% endblock %}
