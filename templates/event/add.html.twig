@@ -5,10 +5,27 @@
 {% endblock %}
 
 {% block body %}
-    {% embed 'views/form/default_form.html.twig' with {'form' : eventForm} %}
         {% block h2 %} Add a new event {% endblock %}
-        {% block buttonLabel1 %} Save event {% endblock %}
-        {% block buttonLabel2 %} Publish event {% endblock %}
-        {% block buttonLabel3 %} Cancel {% endblock %}
-    {% endembed %}
+        {{ form_start(eventForm) }}
+    {{ form_row(eventForm.name) }}
+    {{ form_row(eventForm.dateTimeStart) }}
+    {{ form_row(eventForm.dateLimitRegistration) }}
+    {{ form_row(eventForm.numMaxRegistration) }}
+    {{ form_row(eventForm.duration) }}
+    {{ form_row(eventForm.infoEvent) }}
+    {{ form_row(eventForm.campus) }}
+    {{ form_row(eventForm.city) }}
+    {{ form_row(eventForm.location) }}
+    <a href="{{ path('location_add') }}" class="btn btn-primary">Add Location</a>
+    {{ form_row(eventForm.street) }}
+    {{ form_row(eventForm.zipcode) }}
+    {{ form_row(eventForm.latitude) }}
+    {{ form_row(eventForm.longitude) }}
+    {{ form_rest(eventForm) }}
+    {{ form_end(eventForm) }}
+        {% block button %}
+            <button>Save event</button>
+            <button>Publish event</button>
+            <button>Cancel</button>
+        {% endblock %}
 {% endblock %}

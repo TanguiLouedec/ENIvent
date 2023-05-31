@@ -11,7 +11,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-#[Route('/events', name:'event_')]
+#[Route('/event', name:'event_')]
 class EventController extends AbstractController
 {
     #[Route('/list', name: 'list')]

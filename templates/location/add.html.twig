@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    {{ parent() }} || Add Location
+{% endblock %}
+
+{% block body %}
+    {% embed 'views/form/default_form.html.twig' with {'form' : locationForm} %}
+        {% block h2 %} Add a new location {% endblock %}
+        {% block button %}
+        <button>Add location</button>
+        {% endblock %}
+    {% endembed %}
+{% endblock %}
+
+
+
