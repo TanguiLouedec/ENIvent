@@ -1,0 +1,19 @@
+{% extends '/base.html.twig' %}
+
+{% block title %}
+    {{ parent() }} || Cancel Event
+{% endblock %}
+
+{% block body %}
+    {% block h2 %} Cancel event {% endblock %}<br>
+    <div>Event : {{ event.name }}</div>
+    <div>Event date : {{ event.dateTimeStart | date('d-m-Y') }}</div>
+    <div>Event campus : {{ event.campus.name }}</div>
+    <div>Event address : {{ event.location.street ~" "~ event.location.city.zipCode ~" "~ event.location.city.name }}</div>
+    {{ form_start(eventCancelForm) }}
+    {{ form_row(eventCancelForm.deleteComment) }}
+    {% block button %}
+        <button>Cancel event</button>
+    {% endblock %}
+    {{ form_end(eventCancelForm) }}
+{% endblock %}

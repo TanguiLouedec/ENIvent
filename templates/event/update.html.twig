@@ -14,14 +14,13 @@
     {{ form_row(eventFormUpdate.infoEvent) }}
     {{ form_row(eventFormUpdate.campus) }}
     {{ form_row(eventFormUpdate.city) }}
-    <div hidden="hidden">
-        {{ form_row(eventFormUpdate.state) }}
-    </div>
     {{ form_row(eventFormUpdate.location) }}
-    <a href="{{ path('location_add') }}" class="btn btn-primary" id="addLocationButton" target="_blank">Add new location</a><br>
-    {% block button %}
-        <button>Update</button>
-    {% endblock %}
+    <a href="{{ path('location_add') }}" class="btn btn-primary" id="addLocationButton" target="_blank">Add new
+        location</a><br>
+    {{ form_row(eventFormUpdate.save) }}
+    {{ form_row(eventFormUpdate.open) }}
+    <a class="link_button" href="{{ path('event_detail', {'id':event.id}) }}">Back</a><br>
+    <a class="link_button" href="{{ path('event_cancel', {'id':event.id}) }}">Cancel Event</a>
     {{ form_end(eventFormUpdate) }}
 {% endblock %}
 

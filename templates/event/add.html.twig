@@ -1,12 +1,12 @@
 {% extends '/base.html.twig' %}
 
 {% block title %}
-{{ parent() }} || Add Event
+    {{ parent() }} || Add Event
 {% endblock %}
 
 {% block body %}
-        {% block h2 %} Add a new event {% endblock %}
-        {{ form_start(eventForm) }}
+    {% block h2 %} Add a new event {% endblock %}
+    {{ form_start(eventForm) }}
     {{ form_row(eventForm.name) }}
     {{ form_row(eventForm.dateTimeStart) }}
     {{ form_row(eventForm.dateLimitRegistration) }}
@@ -15,13 +15,9 @@
     {{ form_row(eventForm.infoEvent) }}
     {{ form_row(eventForm.campus) }}
     {{ form_row(eventForm.city) }}
-    <div hidden="hidden">
-    {{ form_row(eventForm.state) }}
-    </div>
     {{ form_row(eventForm.location) }}
-    <a href="{{ path('location_add') }}" class="btn btn-primary" id="addLocationButton" target="_blank">Add new location</a><br>
-    {% block button %}
-            <button>Add event</button>
-    {% endblock %}
+    <a href="{{ path('location_add') }}" class="btn btn-primary" id="addLocationButton" target="_blank">Add new
+        location</a><br>
+    <button onclick="window.location.href='{{ path('main_home') }}';">Cancel</button>
     {{ form_end(eventForm) }}
 {% endblock %}
