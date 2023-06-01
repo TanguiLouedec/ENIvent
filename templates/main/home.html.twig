@@ -3,31 +3,20 @@
 {% block title %}Here are the events{% endblock %}
 
 {% block body %}
-    <h1>Here is your event list</h1>
-    <section>
-        <table>
-            <tr>
-                <th>Event</th>
-                <th>Date event start</th>
-                <th>Last registration Date</th>
-                <th>Number spaces</th>
-                <th>Stat of event</th>
-                <th>Actions</th>
-            </tr>
-                {% for event in events %}
-                    <tr>
-                        <th><a href="{{ path('event_detail', {'id': event.id}) }}"
-                               title="View details about this event"> {{ event.name }}</a></th>
-                        <th>{{ event.dateTimeStart | date('d-m-Y') }}</th>
-                        <th>{{ event.dateLimitRegistration | date('d-m-Y') }}</th>
-                        <th>{{ event.numMaxRegistration }}</th>
-                        <th>{{ event.state.tag }}</th>
-                        <th><a href="{{ path('event_update', {'id': event.id}) }}" title="update event"> update </a></th>
-                    </tr>
-                {% endfor %}
-        </table>
+
+    <h1 class="mt-8 ml-8 text-2xl">Events :</h1>
+
+    <section class="w-1/2 h-1/2 mt-8 ml-8 rounded-md border-2 border-blue-600 overflow-y-auto">
+
+        <div class="[&>*:nth-child(even)]:bg-blue-100 overflow-hidden">
+            {% for event in events %}
+                <div class="h-16 pl-4 pr-4 flex items-center">
+                    <a href="{{ path('event_detail', {'id': event.id}) }}"
+                    title="View details about this wish"> {{ event.name }}
+                    </a>
+                </div>
+            {% endfor %}
+        </div>
+
     </section>
-    <br>
-    <a href="{{ path('event_add')}}"
-       title="add Event" type="button"> Add event </a>
 {% endblock %}
