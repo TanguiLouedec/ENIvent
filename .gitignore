@@ -7,7 +7,7 @@
 /public/bundles/
 /var/
 /vendor/
-.ideas
+/.env
 ###< symfony/framework-bundle ###
 /composer.json
 ###> phpunit/phpunit ###
