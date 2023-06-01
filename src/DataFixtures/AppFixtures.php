@@ -119,7 +119,7 @@ class AppFixtures extends Fixture
 
         for ($i=0; $i<6; $i++) {
             $state = new State();
-            $state->setTag($generator->Element(["created","open","closed","ongoing","over","cancelled"]));
+            $state->setTag($generator->randomElement(["created","open","closed","ongoing","over","cancelled"]));
 
 
         $manager->persist($state);
@@ -148,7 +148,7 @@ class AppFixtures extends Fixture
         }
 
 
-		 //----------------------------------------------------------------------------------
+        //----------------------------------------------------------------------------------
         // Validation dans la BD
         //----------------------------------------------------------------------------------
         $manager->flush();
