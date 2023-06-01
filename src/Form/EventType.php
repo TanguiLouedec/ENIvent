@@ -32,14 +32,13 @@ class EventType extends AbstractType
             ->add('name',TextType::class,['label' => 'Event name'])
             ->add('dateTimeStart',DateTimeType::class, ['html5'=>true,'widget'=>'single_text'])
             ->add('dateLimitRegistration',DateType::class, ['html5'=>true,'widget'=>'single_text'])
-            ->add('numMaxRegistration')
+            ->add('numMaxRegistration',IntegerType::class)
             ->add('duration', IntegerType::class,['label' => 'Duration in minutes'])
             ->add('infoEvent', TextareaType::class, ['label' => 'Description and information'])
             ->add('campus', EntityType::class,['class'=>Campus::class,'choice_label'=>'name'])
             ->add('city', EntityType::class, ['mapped'=>false,'class'=>City::class,'choice_label'=>'name'])
             ->add('location', EntityType::class, ['class'=>Location::class,'choice_label'=>'name'])
             ->add('state', EntityType::class,['class'=>State::class,'choice_label'=>'tag'])
-
         ;
     }
 

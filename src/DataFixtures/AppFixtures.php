@@ -2,12 +2,15 @@
 namespace App\DataFixtures;
 use App\Entity\Campus;
 use App\Entity\City;
+use App\Entity\Event;
+use App\Entity\Location;
+use App\Entity\State;
 use App\Entity\User;
-use App\Entity\Role;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 use Faker\Factory;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
+
 
 class AppFixtures extends Fixture
 {
@@ -27,41 +30,6 @@ class AppFixtures extends Fixture
 
         $generator = Factory::create('fr_FR');
 
-
-        //--------------------------------------------------------------------------------------
-        //Création des Roles
-        //--------------------------------------------------------------------------------------
-//        $role1Admin = new Role();
-//        $role1Admin->setLibelle("ROLE_ADMIN");
-//        $manager->persist($role1Admin);
-//
-//        $role2User = new Role();
-//        $role2User->setLibelle("ROLE_USER");
-//        $manager->persist($role2User);
-//
-//        $role3Abonne = new Role();
-//        $role3Abonne->setLibelle("ROLE_ABONNE");
-//        $manager->persist($role3Abonne);
-
-        //--------------------------------------------------------------------------------------
-        //Création des Abonnements
-        //--------------------------------------------------------------------------------------
-//        $abonnement1Free = new Abonnement();
-//        $abonnement1Free->setLibelle("FREE");
-//        $manager->persist($abonnement1Free);
-//
-//        $abonnement2Jour = new Abonnement();
-//        $abonnement2Jour->setLibelle("JOUR");
-//        $manager->persist($abonnement2Jour);
-//
-//        $abonnement3Mensuel = new Abonnement();
-//        $abonnement3Mensuel->setLibelle("MENSUEL");
-//        $manager->persist($abonnement3Mensuel);
-//
-//        $abonnement4Annuel = new Abonnement();
-//        $abonnement4Annuel->setLibelle("ANNUEL");
-//        $manager->persist($abonnement4Annuel);
-
         //-------------------------------------------
         //Création des Campus
         //-------------------------------------------
@@ -76,7 +44,7 @@ class AppFixtures extends Fixture
         for ($i=0; $i<15; $i++) {
             $city = new City();
             $city->setName($generator->city)
-                ->setZipCode($generator->randomNumber($nbDigits = 5, $strict = true));
+                ->setZipCode($generator->randomNumber(5, true));
             $manager->persist($city);
         }
         //-------------------------------------------
@@ -87,6 +55,7 @@ class AppFixtures extends Fixture
 
         for ($i=0; $i<25; $i++) {
             $user = new User();
+            $user->setNickname($generator->name);
             $user->setFirstName($generator->firstName);
             $user->setLastName($generator->lastName);
             $user->setEmail($generator->email);
@@ -97,6 +66,7 @@ class AppFixtures extends Fixture
 //        $campus->setName()
 //            ->setId();
             $user->setCampus($campus);
+            $user->setPhoneNumber($generator->phoneNumber);
 
             //Pass
 
@@ -108,6 +78,76 @@ class AppFixtures extends Fixture
 
             $manager->persist($user);
         }
+
+        $user=new User();
+
+        $plainPassword = "123456";
+        $encoded = $this->encoder->hashPassword($user, $plainPassword);
+
+        $user->setLastName("test")
+            ->setFirstName("test")
+            ->setEmail("test@test.fr")
+            ->setActive("Active")
+            ->setRoles(["ROLE_ADMIN"])
+            ->setCampus($campus)
+            ->setPhoneNumber("0123456789")
+            ->setNickname("chaussettes");
+
+        $user->setPassword($encoded);
+        $manager->persist($user);
+
+        //-------------------------------------------
+        //Création des Location
+        //-------------------------------------------
+
+        for ($i=0; $i<25; $i++) {
+            $location = new Location;
+            $location->setLatitude($generator->latitude)
+                ->setLongitude($generator->longitude)
+                ->setName($generator->name)
+                ->setStreet($generator->streetName)
+                ->setCity($city);
+
+            $manager->persist($location);
+
+        }
+
+
+        //-------------------------------------------
+        //Création des State
+        //-------------------------------------------
+
+        for ($i=0; $i<6; $i++) {
+            $state = new State();
+            $state->setTag($generator->randomElement(["created","open","closed","ongoing","over","cancelled"]));
+
+
+        $manager->persist($state);
+
+        }
+
+
+//        //-------------------------------------------
+//        //Création des Event
+//        //-------------------------------------------
+//
+        for ($i=0; $i<25; $i++) {
+            $event = new Event;
+            $event->setCampus($campus)
+                ->setDateLimitRegistration($generator->dateTime)
+                ->setDateTimeStart($generator->dateTime)
+                ->setDuration($generator->randomNumber(4,false))
+                ->setInfoEvent($generator->realText(200))
+                ->setLocation($location)
+                ->setName($generator->name)
+                ->setNumMaxRegistration($generator->randomNumber(3,false))
+                ->setState($state);
+
+            $manager->persist($event);
+
+        }
+
+
 		 //----------------------------------------------------------------------------------
         // Validation dans la BD
         //----------------------------------------------------------------------------------
