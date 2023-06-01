@@ -12,12 +12,21 @@
     {% for c in city %}
         <article>
             <a>
-                <img src="{{ c.name }}" alt="name of city : {{ c.name }}">
+                <img src="{{ c.name }}" alt="Name of city : {{ c.name }}">
+                <img src="{{ c.zipCode }}" alt=" - Zip code : {{ c.zipCode }}">
             </a>
+
+            <a class="link_button" href="{{ path('city_update' , {'id': c.id}) }}">Edit</a>
+
+            <a class="link_button" onclick="return confirm('Are you sure you want to delete {{ c.name }} ?')" href="{{ path('delete_city' , {'id': c.id}) }}">Delete city</a>
+
+
         </article>
 
-    {% endfor %}
+            {% endfor %}
 
+            <a class="link_button" href="{{ path('add_city')}}">Add new city</a>
 
+    </section>
 
 {% endblock %}
