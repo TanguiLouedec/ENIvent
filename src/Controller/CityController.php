@@ -17,14 +17,14 @@ class CityController extends AbstractController
     #[Route('/city/add', name: 'add_city')]
     public function addCity(CityRepository $cityRepository, Request $request){
 
-       $city = new City();
-       $cityForm = $this->createForm(CityType::class,$city);
-       $cityForm->handleRequest($request);
+        $city = new City();
+        $cityForm = $this->createForm(CityType::class,$city);
+        $cityForm->handleRequest($request);
 
         if($cityForm->isSubmitted()&&$cityForm->isValid()) {
             $cityRepository->save($city, true);
             $this->addFlash('success', 'City Created !');
-            return $this->redirectToRoute('list_city', ['id' => $city->getId()]);
+            return $this->redirectToRoute('list_city');
         }
         return $this->render('city/addCity.html.twig', ['cityForm' => $cityForm->createView()]);
     }

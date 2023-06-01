@@ -22,7 +22,7 @@ class CampusController extends AbstractController
         if($campusForm->isSubmitted()&&$campusForm->isValid()) {
             $campusRepository->save($campus, true);
             $this->addFlash('success', 'Campus Created !');
-            return $this->redirectToRoute('list_campus', ['id' => $campus->getId()]);
+            return $this->redirectToRoute('list_campus');
         }
         return $this->render('campus/addCampus.html.twig', [
 
