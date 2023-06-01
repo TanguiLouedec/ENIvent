@@ -42,12 +42,14 @@ class Event
     #[ORM\JoinColumn(nullable: false)]
     private ?Campus $campus = null;
 
-    #[ORM\ManyToOne(inversedBy: 'events')]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\ManyToOne(cascade: ['persist'], inversedBy: 'events')]
     private ?State $state = null;
 
     #[ORM\ManyToMany(targetEntity: User::class, inversedBy: 'events')]
     private Collection $users;
+
+    #[ORM\Column(length: 6000, nullable: true)]
+    private ?string $deleteComment = null;
 
     public function __construct()
     {
@@ -187,6 +189,18 @@ class Event
     public function removeUser(User $user): self
     {
         $this->users->removeElement($user);
+
+        return $this;
+    }
+
+    public function getDeleteComment(): ?string
+    {
+        return $this->deleteComment;
+    }
+
+    public function setDeleteComment(?string $deleteComment): self
+    {
+        $this->deleteComment = $deleteComment;
 
         return $this;
     }

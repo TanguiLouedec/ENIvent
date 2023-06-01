@@ -8,6 +8,7 @@
 
     <h3>{{ event.name }}</h3>
     <div>Event date & time : {{ event.dateTimeStart | date('d-m-Y') }}</div>
+    <div>Event status : {{ event.state.tag }}</div>
     <div>Event limit registration date : {{ event.dateLimitRegistration | date('d-m-Y') }}</div>
     <div>Number of places : {{ event.numMaxRegistration }} </div>
     <div>Event duration : {{ event.duration }} </div>
@@ -20,6 +21,6 @@
     <div>Latitude : {{ event.location.latitude }} </div>
     <div>Longitude : {{ event.location.longitude}} </div>
     {% block button %}
-        <a class="link_button" href="{{ path('event_update', {'id':event.id}) }}">Edit</a>
+        <a class="link_button" href="{{ path('event_update', {'id':event.id}) }}">Edit Event</a>
     {% endblock %}
 {% endblock %}

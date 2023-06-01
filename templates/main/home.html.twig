@@ -5,11 +5,29 @@
 {% block body %}
     <h1>Here is your event list</h1>
     <section>
-            <ul>
+        <table>
+            <tr>
+                <th>Event</th>
+                <th>Date event start</th>
+                <th>Last registration Date</th>
+                <th>Number spaces</th>
+                <th>Stat of event</th>
+                <th>Actions</th>
+            </tr>
                 {% for event in events %}
-                        <li><a href="{{ path('event_detail', {'id': event.id}) }}"
-                               title="View details about this wish"> {{ event.name }}</a></li>
+                    <tr>
+                        <th><a href="{{ path('event_detail', {'id': event.id}) }}"
+                               title="View details about this event"> {{ event.name }}</a></th>
+                        <th>{{ event.dateTimeStart | date('d-m-Y') }}</th>
+                        <th>{{ event.dateLimitRegistration | date('d-m-Y') }}</th>
+                        <th>{{ event.numMaxRegistration }}</th>
+                        <th>{{ event.state.tag }}</th>
+                        <th><a href="{{ path('event_update', {'id': event.id}) }}" title="update event"> update </a></th>
+                    </tr>
                 {% endfor %}
-            </ul>
+        </table>
     </section>
+    <br>
+    <a href="{{ path('event_add')}}"
+       title="add Event" type="button"> Add event </a>
 {% endblock %}
