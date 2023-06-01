@@ -15,17 +15,6 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route('/event', name:'event_')]
 class EventController extends AbstractController
 {
-    #[Route('/list', name: 'list')]
-    public function list(EventRepository $eventRepository): Response
-    {
-      $events = $eventRepository ->findAll();
-      if(!$events){
-          throw  $this->createNotFoundException("Oops ! No events found !");
-      }
-
-      return $this->render('event/list.html.twig', ['event'=>$events]);
-    }
-
     #[Route('/add', name:'add')]
     public function add(EventRepository $eventRepository, Request $request){
 
@@ -67,6 +56,15 @@ class EventController extends AbstractController
         }
         return $this->render('event/update.html.twig',['eventFormUpdate'=>$eventForm->createView()]);
 
+    }
+
+    #[Route('/delete/{id}', name:'delete')]
+    public function delete(int $id, EventRepository $eventRepository,Request $request){
+
+        $event = $eventRepository->find($id);
+        $eventRepository->remove($event, true);
+        $this->addFlash('success', $event->getName()."has been deleted");
+        return $this->redirectToRoute('event_list');
     }
 
 }
