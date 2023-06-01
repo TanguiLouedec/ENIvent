@@ -6,6 +6,8 @@ use App\Repository\LocationRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: LocationRepository::class)]
 class Location
@@ -16,12 +18,25 @@ class Location
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\Length(
+        min:2,
+        max:255,
+        minMessage: "Minimum {{ limit }} character please !",
+        maxMessage: "Maximum {{ limit }} characters please !"
+    )]
     private ?string $name = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\Length(
+        min:1,
+        max:255,
+        minMessage: "Minimum {{ limit }} character please !",
+        maxMessage: "Maximum {{ limit }} characters please !"
+    )]
     private ?string $street = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\Range(notInRangeMessage: "Not in  (range : 0 to 1440)", min: 0, max: 1440)]
     private ?string $latitude = null;
 
     #[ORM\Column(length: 255)]
