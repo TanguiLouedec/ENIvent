@@ -1,31 +1,41 @@
 {% extends 'base.html.twig' %}
 
-{%block title%}
+{% block title %}
     {{ parent() }} | List of Cities
 {% endblock %}
 
 {% block body %}
     <h2>List of Cities !</h2>
 
+    <form action="{{ path('list_city') }}" method="get">
+        <label for="search">Search</label>
+        <input type="search" , name="search" , id="search" value="{{ search }}">
+        <input type="submit" value="search">
+    </form>
+
     <section>
+        {% if city is not empty %}
+            {% for c in city %}
+                <article>
+                    <a>
+                        <img src="{{ c.name }}" alt="Name of city : {{ c.name }}">
+                        <img src="{{ c.zipCode }}" alt=" - Zip code : {{ c.zipCode }}">
+                    </a>
 
-    {% for c in city %}
-        <article>
-            <a>
-                <img src="{{ c.name }}" alt="Name of city : {{ c.name }}">
-                <img src="{{ c.zipCode }}" alt=" - Zip code : {{ c.zipCode }}">
-            </a>
+                    <a class="link_button" href="{{ path('city_update' , {'id': c.id}) }}">Edit</a>
 
-            <a class="link_button" href="{{ path('city_update' , {'id': c.id}) }}">Edit</a>
-
-            <a class="link_button" onclick="return confirm('Are you sure you want to delete {{ c.name }} ?')" href="{{ path('delete_city' , {'id': c.id}) }}">Delete city</a>
+                    <a class="link_button" onclick="return confirm('Are you sure you want to delete {{ c.name }} ?')"
+                       href="{{ path('delete_city' , {'id': c.id}) }}">Delete city</a>
 
 
-        </article>
+                </article>
 
             {% endfor %}
+        {% else %}
+            <p>No cities found.</p>
+        {% endif %}
 
-            <a class="link_button" href="{{ path('add_city')}}">Add new city</a>
+        <a class="link_button" href="{{ path('add_city') }}">Add new city</a>
 
     </section>
 

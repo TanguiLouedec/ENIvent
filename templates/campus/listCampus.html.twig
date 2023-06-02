@@ -1,34 +1,39 @@
-{%  extends 'base.html.twig' %}
+{% extends 'base.html.twig' %}
 
-{%block title%}
+{% block title %}
     {{ parent() }} | List of Campuses
 {% endblock %}
 
 {% block body %}
     <h2>List of Campuses !</h2>
 
+    <form action="{{ path('list_campus') }}" method="get">
+        <label for="search">Search</label>
+        <input type="search" , name="search" , id="search" value="{{ search }}">
+        <input type="submit" value="search">
+    </form>
+
     <section>
+        {% if campus is not empty %}
+        {% for c in campus %}
+            <article>
+                <a>
+                    <img src="{{ c.name }}" alt="nom du campus : {{ c.name }}">
+                </a>
+            </article>
 
-    {% for c in campus %}
+            <a class="link_button" href="{{ path('update_campus' , {'id': c.id}) }}">Edit</a>
 
-        <article>
-            <a>
-                <img src="{{ c.name }}" alt="nom du campus : {{ c.name }}">
-            </a>
-        </article>
+            <a class="link_button" onclick="return confirm('Are you sure you want to delete {{ c.name }} ?')"
+               href="{{ path('delete_campus' , {'id': c.id}) }}">Delete campus</a>
 
-        <a class="link_button" href="{{ path('update_campus' , {'id': c.id}) }}">Edit</a>
-
-        <a class="link_button" onclick="return confirm('Are you sure you want to delete {{ c.name }} ?')" href="{{ path('delete_campus' , {'id': c.id}) }}">Delete campus</a>
-
-
-
-
-    {% endfor %}
-
-        <a class="link_button" href="{{ path('add_campus')}}">Add new campus</a>
+        {% endfor %}
+        {% else %}
+            <p>No campuses found.</p>
+        {% endif %}
 
     </section>
 
+    <a class="link_button" href="{{ path('add_campus') }}">Add a new Campus</a>
 
 {% endblock %}

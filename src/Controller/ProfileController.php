@@ -2,6 +2,9 @@
 
 namespace App\Controller;
 
+use App\Entity\State;
+use App\Form\EventType;
+use App\Form\RegistrationFormType;
 use App\Repository\EventRepository;
 use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -22,14 +25,19 @@ class ProfileController extends AbstractController
     }
 
     #[Route('/profile/update', name: 'profile_update')]
-    public function update(): Response
+    public function update(UserRepository $userRepository, Request $request): Response
     {
-        //TODO update method
         $user = $this->getUser();
+        $userForm = $this->createForm(RegistrationFormType::class, $user);
+        $userForm->handleRequest($request);
 
-        return $this->render('profile/profile.html.twig', [
-            'user' => $user
-        ]);
+        if ($userForm->isSubmitted() && $userForm->isValid()) {
+
+            $userRepository->save($user, true);
+            $this->addFlash('success', 'Profil successfully updated !');
+            return $this->redirectToRoute('app_profile', ['id' => $user->getId()]);
+        }
+        return $this->render('profile/update.html.twig', ['userFormUpdate' => $userForm->createView(), 'user' => $user]);
     }
 
     #[Route('/profile/delete', name: 'profile_delete')]
