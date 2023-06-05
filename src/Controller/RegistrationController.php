@@ -41,8 +41,9 @@ class RegistrationController extends AbstractController
             if($file){
                 $newFileName = $uploader->save($file, $user->getFirstName() . '-' . $user->getLastName(), $this->getParameter('upload_profile_picture'));
                 $user->setProfilePicture($newFileName);
+            } else {
+                $user->setProfilePicture('DefProfPic.bmp');
             }
-
             // encode the plain password
             $user->setPassword(
                 $userPasswordHasher->hashPassword(

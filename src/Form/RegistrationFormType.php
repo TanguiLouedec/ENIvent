@@ -6,6 +6,7 @@ use App\Entity\Campus;
 use App\Entity\User;
 use App\Repository\CampusRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Faker\Provider\Image;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Bridge\Doctrine\ManagerRegistry;
 use Symfony\Component\Form\AbstractType;
@@ -48,7 +49,8 @@ class RegistrationFormType extends AbstractType
                 'second_options' => ['label' => 'Confirm password'],
             ])
             ->add('profilePicture', FileType::class, [
-                'mapped' => false
+                'mapped' => false,
+                'required' => false,
             ])
         ;
     }

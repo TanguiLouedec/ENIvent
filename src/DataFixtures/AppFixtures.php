@@ -67,6 +67,7 @@ class AppFixtures extends Fixture
 //            ->setId();
             $user->setCampus($campus);
             $user->setPhoneNumber($generator->phoneNumber);
+            $user->setProfilePicture('DefProfPic.bmp');
 
             //Pass
 
@@ -91,7 +92,8 @@ class AppFixtures extends Fixture
             ->setRoles(["ROLE_ADMIN"])
             ->setCampus($campus)
             ->setPhoneNumber("0123456789")
-            ->setNickname("chaussettes");
+            ->setNickname("chaussettes")
+            ->setProfilePicture('DefProfPic.bmp');
 
         $user->setPassword($encoded);
         $manager->persist($user);
