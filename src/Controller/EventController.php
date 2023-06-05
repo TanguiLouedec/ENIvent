@@ -8,7 +8,6 @@ use App\Entity\State;
 use App\Form\EventCancelType;
 use App\Form\EventType;
 use App\Repository\EventRepository;
-use App\Repository\LocationRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -96,5 +95,7 @@ class EventController extends AbstractController
         }
         return $this->render('event/cancel.html.twig', ['eventCancelForm' => $eventCancelForm->createView(), 'event' => $event]);
     }
+
+
 
 }

@@ -7,9 +7,14 @@
 /public/bundles/
 /var/
 /vendor/
+/public/build/
 /.env
 ###< symfony/framework-bundle ###
 /composer.json
+/tailwind.config.js
+/webpack.config.js
+/composer.json
+
 ###> phpunit/phpunit ###
 /phpunit.xml
 .phpunit.result.cache
