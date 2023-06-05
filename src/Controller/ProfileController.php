@@ -21,7 +21,7 @@ class ProfileController extends AbstractController
         ]);
     }
 
-    #[Route('/profile/update', name: 'profile_update')]
+    #[Route('/profile/update/{id}', name: 'profile_update')]
     public function update(): Response
     {
         //TODO update method
