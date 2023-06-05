@@ -30,13 +30,19 @@ class CityController extends AbstractController
     }
 
     #[Route('/city', name: 'list_city')]
-    public function listCity(CityRepository $cityRepository): Response
+    public function listCity(CityRepository $cityRepository, Request $request): Response
     {
-        //TODO city search bar
 
-        $city = $cityRepository->findAll();
+        $search = $request->query->get('search');
+        $cities = [];
 
-        return $this->render('city/listCity.html.twig', ['city' => $city]);
+        if($search){
+            $cities = $cityRepository->search($search);
+        }else{
+            $cities = $cityRepository->findAll();
+        }
+
+        return $this->render('city/listCity.html.twig', ['city' => $cities, 'search'=>$search]);
     }
 
     #[route('/city/delete/{id}', name: 'delete_city', requirements: ['id' =>'\d+'])]

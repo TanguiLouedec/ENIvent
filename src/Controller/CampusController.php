@@ -31,13 +31,20 @@ class CampusController extends AbstractController
         ]);
     }
     #[Route('/campus', name: 'list_campus')]
-    public function listCampus(CampusRepository $campusRepository): Response
+    public function listCampus(CampusRepository $campusRepository, Request $request): Response
     {
-        //TODO campus search bar
+        $search = $request->query->get('search');
+        $campuses = [];
 
-        $campus = $campusRepository->findAll();
+        if($search){
+            $campuses=$campusRepository->search($search);
+        }else{
+            $campuses = $campusRepository->findAll();
+        }
 
-        return $this->render('campus/listCampus.html.twig', ['campus' => $campus]);
+
+
+        return $this->render('campus/listCampus.html.twig', ['campus' => $campuses, 'search'=>$search]);
     }
 
     #[route('/campus/{id}', name: 'delete_campus', requirements: ['id' =>'\d+'])]
@@ -70,6 +77,8 @@ class CampusController extends AbstractController
 
 
     }
+
+
 
 
 

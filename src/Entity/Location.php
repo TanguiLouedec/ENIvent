@@ -36,10 +36,21 @@ class Location
     private ?string $street = null;
 
     #[ORM\Column(length: 255)]
-    #[Assert\Range(notInRangeMessage: "Not in  (range : 0 to 1440)", min: 0, max: 1440)]
+    #[Assert\Length(
+        min:-100,
+        max:100,
+        minMessage: "Minimum {{ limit }} character please !",
+        maxMessage: "Maximum {{ limit }} characters please !"
+    )]
     private ?string $latitude = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\Length(
+        min:-100,
+        max:100,
+        minMessage: "Minimum {{ limit }} character please !",
+        maxMessage: "Maximum {{ limit }} characters please !"
+    )]
     private ?string $longitude = null;
 
     #[ORM\ManyToOne(inversedBy: 'location')]

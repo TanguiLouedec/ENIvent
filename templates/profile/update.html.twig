@@ -1,0 +1,20 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Register{% endblock %}
+
+{% block body %}
+    <h1>Update profil</h1>
+
+    {{ form_start(userFormUpdate) }}
+    {{ form_row(userFormUpdate.email) }}
+    {{ form_row(userFormUpdate.nickname) }}
+    {{ form_row(userFormUpdate.firstname) }}
+    {{ form_row(userFormUpdate.lastname) }}
+    {{ form_row(userFormUpdate.phoneNumber) }}
+    {{ form_row(userFormUpdate.password.first) }}
+    {{ form_row(userFormUpdate.password.second) }}
+    {{ form_row(userFormUpdate.campus) }}
+    {{ form_row(userFormUpdate.profilePicture) }}
+    <button type="submit" class="btn">Register</button>
+    {{ form_end(userFormUpdate) }}
+{% endblock %}

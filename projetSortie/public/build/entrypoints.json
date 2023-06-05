@@ -1,0 +1,14 @@
+{
+  "entrypoints": {
+    "app": {
+      "js": [
+        "/projetSortie/public/build/runtime.js",
+        "/projetSortie/public/build/vendors-node_modules_symfony_stimulus-bridge_dist_index_js-node_modules_core-js_modules_es_da-03e5c3.js",
+        "/projetSortie/public/build/app.js"
+      ],
+      "css": [
+        "/projetSortie/public/build/app.css"
+      ]
+    }
+  }
+}
