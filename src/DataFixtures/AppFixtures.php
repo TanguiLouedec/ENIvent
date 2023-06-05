@@ -117,14 +117,32 @@ class AppFixtures extends Fixture
         //Création des State
         //-------------------------------------------
 
-        for ($i=0; $i<6; $i++) {
-            $state = new State();
-            $state->setTag($generator->randomElement(["created","open","closed","ongoing","over","cancelled"]));
+
+        $state1 = new State();
+        $state1->setTag("created");
+        $manager->persist($state1);
+
+        $state2 = new State();
+        $state2->setTag("open");
+        $manager->persist($state2);
+
+        $state3 = new State();
+        $state3->setTag("closed");
+        $manager->persist($state3);
+
+        $state4 = new State();
+        $state4->setTag("ongoing");
+        $manager->persist($state4);
+
+        $state5 = new State();
+        $state5->setTag("over");
+        $manager->persist($state5);
+
+        $state6 = new State();
+        $state6->setTag("cancelled");
+        $manager->persist($state6);
 
 
-        $manager->persist($state);
-
-        }
 
 
 //        //-------------------------------------------
@@ -135,13 +153,13 @@ class AppFixtures extends Fixture
             $event = new Event;
             $event->setCampus($campus)
                 ->setDateLimitRegistration($generator->dateTime)
-                ->setDateTimeStart($generator->dateTime)
-                ->setDuration($generator->randomNumber(4,false))
-                ->setInfoEvent($generator->realText(200))
+                ->setDateTimeStart($generator->dateTimeBetween('now','+30 years'))
+                ->setDuration($generator->randomNumber(3,true))
+                ->setInfoEvent($generator->realText(6000))
                 ->setLocation($location)
                 ->setName($generator->name)
-                ->setNumMaxRegistration($generator->randomNumber(3,false))
-                ->setState($state);
+                ->setNumMaxRegistration($generator->randomNumber(2, true))
+                ->setState($state1);
 
             $manager->persist($event);
 
