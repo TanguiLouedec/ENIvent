@@ -141,7 +141,7 @@ class AppFixtures extends Fixture
                 ->setLocation($location)
                 ->setName($generator->name)
                 ->setNumMaxRegistration($generator->randomNumber(3,false))
-                ->setState($state);
+                ->setState(2);
 
             $manager->persist($event);
 
