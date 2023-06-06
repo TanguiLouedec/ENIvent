@@ -19,10 +19,10 @@ class Event
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    #[Assert\NotBlank(message : "The event name is mandatory !")]
+    #[Assert\NotBlank(message: "The event name is mandatory !")]
     #[Assert\Length(
-        min:2,
-        max:255,
+        min: 2,
+        max: 255,
         minMessage: "Minimum {{ limit }} character please !",
         maxMessage: "Maximum {{ limit }} characters please !"
     )]
@@ -46,8 +46,8 @@ class Event
 
     #[ORM\Column(length: 6000)]
     #[Assert\Length(
-        min:10,
-        max:6000,
+        min: 10,
+        max: 6000,
         minMessage: "Minimum {{ limit }} character please !",
         maxMessage: "Maximum {{ limit }} characters please !"
     )]
@@ -69,8 +69,8 @@ class Event
 
     #[ORM\Column(length: 6000, nullable: true)]
     #[Assert\Length(
-        min:10,
-        max:6000,
+        min: 10,
+        max: 6000,
         minMessage: "Minimum {{ limit }} character please !",
         maxMessage: "Maximum {{ limit }} characters please !"
     )]
@@ -228,5 +228,11 @@ class Event
         $this->deleteComment = $deleteComment;
 
         return $this;
+    }
+
+    public function UserCount(?int $id): int
+    {
+        $eventUsers = $this->getUsers();
+        return count($eventUsers);
     }
 }

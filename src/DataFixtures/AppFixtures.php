@@ -154,14 +154,14 @@ class AppFixtures extends Fixture
         for ($i=0; $i<25; $i++) {
             $event = new Event;
             $event->setCampus($campus)
-                ->setDateLimitRegistration($generator->dateTime)
-                ->setDateTimeStart($generator->dateTimeBetween('now','+30 years'))
+                ->setDateLimitRegistration($generator->dateTimeBetween('now','+30 days'))
+                ->setDateTimeStart($generator->dateTimeBetween('now','+30 days'))
                 ->setDuration($generator->randomNumber(3,true))
                 ->setInfoEvent($generator->realText(6000))
                 ->setLocation($location)
                 ->setName($generator->name)
                 ->setNumMaxRegistration($generator->randomNumber(2, true))
-                ->setState($state1);
+                ->setState($state2);
 
             $manager->persist($event);
 

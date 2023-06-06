@@ -75,7 +75,6 @@ class EventController extends AbstractController
             return $this->redirectToRoute('event_detail', ['id' => $event->getId()]);
         }
         return $this->render('event/update.html.twig', ['eventFormUpdate' => $eventForm->createView(), 'event' => $event]);
-
     }
 
     #[Route('/cancel/{id}', name: 'cancel')]

@@ -11,9 +11,23 @@
         <div class="[&>*:nth-child(even)]:bg-blue-100 overflow-hidden">
             {% for event in events %}
                 <div class="h-16 pl-4 pr-4 flex items-center">
-                    <a href="{{ path('event_detail', {'id': event.id}) }}"
-                    title="View details about this event"> {{ event.name }}
+
+                    <a>
+                        {{ event.userCount(event.id) }}/{{ event.numMaxRegistration }}
                     </a>
+                    <a href="{{ path('event_detail', {'id': event.id}) }}"
+                        title="View details about this event"> {{ event.name }}
+                    </a>
+                    <a href="{{ path('user_apply', {'id': event.id}) }}">
+                        - Apply for this event
+                    </a>
+                    <a href="{{ path('user_cancel', {'id': event.id}) }}"
+                        title="View details about this event"> Cancel subscription
+                    </a>
+
+
+
+
                 </div>
             {% endfor %}
         </div>
