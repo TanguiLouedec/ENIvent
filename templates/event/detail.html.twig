@@ -24,10 +24,4 @@
         <a class="link_button" href="{{ path('event_update', {'id':event.id}) }}">Edit Event</a>
     {% endblock %}
 
-    <div>
-        <h2>List of attendees</h2>
-        {% for user in event.users %}
-            <div>Name : {{ user.firstName ~" "~ user.lastName }}- Nickname : {{ user.nickname }}</div>
-        {% endfor %}
-    </div>
 {% endblock %}

@@ -38,7 +38,8 @@ class RegistrationFormType extends AbstractType
                 'query_builder' => function(CampusRepository $campusRepository) {
                     $qb = $campusRepository->createQueryBuilder('c');
                     return $qb;
-                }
+                },
+                'placeholder' => 'Choose a campus'
             ])
             ->add('password', RepeatedType::class, [
                 'type' => PasswordType::class,

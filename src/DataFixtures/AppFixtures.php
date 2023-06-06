@@ -33,7 +33,7 @@ class AppFixtures extends Fixture
         //-------------------------------------------
         //Création des Campus
         //-------------------------------------------
-        for ($i=0; $i<5; $i++) {
+        for ($i=0; $i<3; $i++) {
             $campus = new Campus();
             $campus->setName($generator->randomElement(["ENI Rennes","ENI Nantes","ENI Niort"]));
             $manager->persist($campus);
@@ -55,7 +55,7 @@ class AppFixtures extends Fixture
 
         for ($i=0; $i<25; $i++) {
             $user = new User();
-            $user->setNickname($generator->name);
+            $user->setNickname($generator->userName);
             $user->setFirstName($generator->firstName);
             $user->setLastName($generator->lastName);
             $user->setEmail($generator->email);
@@ -67,7 +67,6 @@ class AppFixtures extends Fixture
 //            ->setId();
             $user->setCampus($campus);
             $user->setPhoneNumber($generator->phoneNumber);
-            $user->setProfilePicture('DefProfPic.bmp');
 
             //Pass
 
@@ -92,8 +91,7 @@ class AppFixtures extends Fixture
             ->setRoles(["ROLE_ADMIN"])
             ->setCampus($campus)
             ->setPhoneNumber("0123456789")
-            ->setNickname("chaussettes")
-            ->setProfilePicture('DefProfPic.bmp');
+            ->setNickname("chaussettes");
 
         $user->setPassword($encoded);
         $manager->persist($user);
@@ -119,32 +117,14 @@ class AppFixtures extends Fixture
         //Création des State
         //-------------------------------------------
 
-
-        $state1 = new State();
-        $state1->setTag("created");
-        $manager->persist($state1);
-
-        $state2 = new State();
-        $state2->setTag("open");
-        $manager->persist($state2);
-
-        $state3 = new State();
-        $state3->setTag("closed");
-        $manager->persist($state3);
-
-        $state4 = new State();
-        $state4->setTag("ongoing");
-        $manager->persist($state4);
-
-        $state5 = new State();
-        $state5->setTag("over");
-        $manager->persist($state5);
-
-        $state6 = new State();
-        $state6->setTag("cancelled");
-        $manager->persist($state6);
+        for ($i=0; $i<6; $i++) {
+            $state = new State();
+            $state->setTag($generator->randomElement(["created","open","closed","ongoing","over","cancelled"]));
 
 
+        $manager->persist($state);
+
+        }
 
 
 //        //-------------------------------------------
@@ -154,14 +134,14 @@ class AppFixtures extends Fixture
         for ($i=0; $i<25; $i++) {
             $event = new Event;
             $event->setCampus($campus)
-                ->setDateLimitRegistration($generator->dateTimeBetween('now','+30 days'))
-                ->setDateTimeStart($generator->dateTimeBetween('now','+30 days'))
-                ->setDuration($generator->randomNumber(3,true))
-                ->setInfoEvent($generator->realText(6000))
+                ->setDateLimitRegistration($generator->dateTimeBetween('+1 week', '+6 week'))
+                ->setDateTimeStart($generator->dateTimeBetween('+7 week', '+10 week'))
+                ->setDuration($generator->randomNumber(3,false))
+                ->setInfoEvent($generator->realText(200))
                 ->setLocation($location)
                 ->setName($generator->name)
-                ->setNumMaxRegistration($generator->randomNumber(2, true))
-                ->setState($state2);
+                ->setNumMaxRegistration($generator->randomNumber(3,false))
+                ->setState(2);
 
             $manager->persist($event);
 

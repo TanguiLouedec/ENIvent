@@ -36,8 +36,12 @@ class EventType extends AbstractType
             ->add('duration', IntegerType::class, ['label' => 'Duration in minutes'])
             ->add('infoEvent', TextareaType::class, ['label' => 'Description and information'])
             ->add('campus', EntityType::class, ['class' => Campus::class, 'choice_label' => 'name'])
-            ->add('city', EntityType::class, ['mapped' => false, 'class' => City::class, 'choice_label' => 'name'])
-            ->add('location', EntityType::class, ['class' => Location::class, 'choice_label' => 'name'])
+            ->add('city', EntityType::class, ['mapped' => false, 'class' => City::class, 'choice_label' => 'name', 'placeholder' => 'Select a city'])
+            ->add('location', EntityType::class, [
+                'class' => Location::class,
+                'choice_label' => 'name',
+                'placeholder' => 'Select a location'
+            ])
             ->add('open', SubmitType::class, ['label' => 'Publish Event'])
             ->add('save', SubmitType::class, ['label' => 'Save Event']);
     }

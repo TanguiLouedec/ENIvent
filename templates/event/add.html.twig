@@ -21,3 +21,28 @@
     <button onclick="window.location.href='{{ path('main_home') }}';">Cancel</button>
     {{ form_end(eventForm) }}
 {% endblock %}
+
+    {% block javascripts %}
+        <script>
+            let citySelect = document.getElementById('event_city')
+            let locationSelect = document.getElementById('event_location')
+            citySelect.addEventListener('change', function () {
+                let data = citySelect.value;
+                while (locationSelect.firstChild) {
+                    locationSelect.removeChild(locationSelect.firstChild)
+                }
+
+                fetch('/ENIvent/public/event/api/locations/' + data).then(response=>response.json()).then(function(data) {
+                    data.forEach(function(option) {
+                        var opt = document.createElement('option')
+                        opt.value = option.id
+                        opt.innerHTML = option.name
+                        locationSelect.appendChild(opt)
+                        console.log(option)
+                    });
+                })
+
+            });
+
+        </script>
+    {% endblock %}

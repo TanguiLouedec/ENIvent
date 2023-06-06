@@ -13,7 +13,6 @@
 /composer.json
 /tailwind.config.js
 /webpack.config.js
-/composer.json
 
 ###> phpunit/phpunit ###
 /phpunit.xml
