@@ -10,15 +10,15 @@
             {{ encore_entry_link_tags('app') }}
         {% endblock %}
     </head>
-    <body class="h-screen">
-    <header>
-        {{ include('menu/navbar.html.twig') }}
-    </header>
-    {% for message in app.flashes('success') %}
-        <div class="alert alert-success">
-            {{ message }}
-        </div>
-    {% endfor %}
+    <body class="h-screen w-screen p-8">
+        <header>
+            {{ include('menu/navbar.html.twig') }}
+        </header>
+        {% for message in app.flashes('success') %}
+            <div class="alert alert-success">
+                {{ message }}
+            </div>
+        {% endfor %}
 
         {% block body %}{% endblock %}
         {% block javascripts %}

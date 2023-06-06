@@ -8,11 +8,13 @@ use App\Entity\State;
 use App\Form\EventCancelType;
 use App\Form\EventType;
 use App\Repository\EventRepository;
+use App\Repository\LocationRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Serializer\SerializerInterface;
 
 #[Route('/event', name: 'event_')]
 class EventController extends AbstractController
@@ -21,12 +23,16 @@ class EventController extends AbstractController
     public function add(EventRepository $eventRepository, Request $request, EntityManagerInterface $entityManager)
     {
 
+
         $event = new Event();
+
         $eventForm = $this->createForm(EventType::class, $event);
         $eventForm->handleRequest($request);
 
         if ($eventForm->isSubmitted() && $eventForm->isValid()) {
             $state = new State();
+//            $location = $locationRepository->find($eventForm->get('location')->getData());
+//            $event->setLocation($location);
             if ($eventForm->getClickedButton() === $eventForm->get('save')) {
                 $state->setTag('saved');
             } else {

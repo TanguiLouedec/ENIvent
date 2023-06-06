@@ -15,16 +15,19 @@ class Location
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups("city_data")]
+
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups("city_data")]
     #[Assert\Length(
         min:2,
         max:255,
         minMessage: "Minimum {{ limit }} character please !",
         maxMessage: "Maximum {{ limit }} characters please !"
     )]
-    private ?string $name = null;
+    public ?string $name = null;
 
     #[ORM\Column(length: 255)]
     #[Assert\Length(
@@ -54,7 +57,9 @@ class Location
     private ?string $longitude = null;
 
     #[ORM\ManyToOne(inversedBy: 'location')]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\JoinColumn(nullable: true)]
+    #[Groups("city_data")]
+
     private ?City $city = null;
 
     #[ORM\OneToMany(mappedBy: 'location', targetEntity: Event::class, orphanRemoval: true)]
