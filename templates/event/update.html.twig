@@ -12,7 +12,7 @@
     {{ form_row(eventFormUpdate.numMaxRegistration) }}
     {{ form_row(eventFormUpdate.duration) }}
     {{ form_row(eventFormUpdate.infoEvent) }}
-    {{ form_row(eventFormUpdate.campus) }}
+    <div>Campus : {{ userCampus }} </div>
     {{ form_row(eventFormUpdate.city) }}
     {{ form_row(eventFormUpdate.location) }}
     <a href="{{ path('location_add') }}" class="btn btn-primary" id="addLocationButton" target="_blank">Add new
@@ -20,7 +20,9 @@
     {{ form_row(eventFormUpdate.save) }}
     {{ form_row(eventFormUpdate.open) }}
     <a class="link_button" href="{{ path('event_detail', {'id':event.id}) }}">Back</a><br>
+    {% if event.dateTimeStart > date('now') %}
     <a class="link_button" href="{{ path('event_cancel', {'id':event.id}) }}">Cancel Event</a>
+    {% endif %}
     {{ form_end(eventFormUpdate) }}
 {% endblock %}
 

@@ -17,7 +17,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class ProfileController extends AbstractController
 {
-    #[Route('/profile', name: 'app_profile')]
+    #[Route('/myprofile', name: 'app_myprofile')]
     public function index(): Response
     {
         $user = $this->getUser();
@@ -26,6 +26,16 @@ class ProfileController extends AbstractController
             'user' => $user
         ]);
     }
+
+    /*#[Route('/profile/{id}', name: 'app_profile')]
+    public function seeProfile(int $id, UserRepository $userRepository): Response
+    {
+        $user = $userRepository->find($id);
+        if (!$user) {
+            throw $this->createNotFoundException("Oops! User not found");
+        }
+        return $this->render('profile/profile.html.twig', ['user' => $user]);
+    }*/
 
     #[Route('/profile/update', name: 'profile_update')]
     public function update(

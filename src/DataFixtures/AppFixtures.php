@@ -117,15 +117,31 @@ class AppFixtures extends Fixture
         //Création des State
         //-------------------------------------------
 
-        for ($i=0; $i<6; $i++) {
-            $state = new State();
-            $state->setTag($generator->randomElement(["created","open","closed","ongoing","over","cancelled"]));
 
+        $state1 = new State();
+        $state1->setTag("created");
 
-        $manager->persist($state);
+        $state2 = new State();
+        $state2->setTag("open");
 
-        }
+        $state3 = new State();
+        $state3->setTag("closed");
 
+        $state4 = new State();
+        $state4->setTag("ongoing");
+
+        $state5 = new State();
+        $state5->setTag("over");
+
+        $state6 = new State();
+        $state6->setTag("cancelled");
+
+        $manager->persist($state1);
+        $manager->persist($state2);
+        $manager->persist($state3);
+        $manager->persist($state4);
+        $manager->persist($state5);
+        $manager->persist($state6);
 
 //        //-------------------------------------------
 //        //Création des Event
@@ -141,7 +157,7 @@ class AppFixtures extends Fixture
                 ->setLocation($location)
                 ->setName($generator->name)
                 ->setNumMaxRegistration($generator->randomNumber(3,false))
-                ->setState(2);
+                ->setState($state2);
 
             $manager->persist($event);
 

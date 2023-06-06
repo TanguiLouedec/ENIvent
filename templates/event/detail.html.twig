@@ -7,6 +7,10 @@
 {% block body %}
 
     <h3>{{ event.name }}</h3>
+    {% if event.state.tag == 'cancelled' %}
+        <h2>L'événement a été annulé pour les raisons suivantes : </h2>
+        <div>{{ event.deleteComment }}</div>
+    {% endif %}
     <div>Event date & time : {{ event.dateTimeStart | date('d-m-Y') }}</div>
     <div>Event status : {{ event.state.tag }}</div>
     <div>Event limit registration date : {{ event.dateLimitRegistration | date('d-m-Y') }}</div>

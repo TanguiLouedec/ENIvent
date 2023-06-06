@@ -19,38 +19,38 @@ class Event
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    #[Assert\NotBlank(message: "The event name is mandatory !")]
-    #[Assert\Length(
-        min: 2,
-        max: 255,
+    //#[Assert\NotBlank(message : "The event name is mandatory !")]
+    /*#[Assert\Length(
+        min:2,
+        max:255,
         minMessage: "Minimum {{ limit }} character please !",
         maxMessage: "Maximum {{ limit }} characters please !"
-    )]
+    )]*/
     private ?string $name = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
-    #[Assert\GreaterThanOrEqual('today')]
+   /* #[Assert\GreaterThanOrEqual('today')]*/
     private ?\DateTimeInterface $dateTimeStart = null;
 
     #[ORM\Column]
-    #[Assert\Range(notInRangeMessage: "Not in  (range : 0 to 1440)", min: 0, max: 1440)]
+    /*#[Assert\Range(notInRangeMessage: "Not in  (range : 0 to 1440)", min: 0, max: 1440)]*/
     private ?int $duration = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
-    #[Assert\GreaterThan(propertyPath: "dateTimeStart")]
+   /* #[Assert\lessThan(propertyPath: "dateTimeStart")]*/
     private ?\DateTimeInterface $dateLimitRegistration = null;
 
     #[ORM\Column]
-    #[Assert\Range(notInRangeMessage: "Not in range (range : 0 to 200)", min: 0, max: 200)]
+   /* #[Assert\Range(notInRangeMessage: "Not in range (range : 0 to 200)", min: 0, max: 200)]*/
     private ?int $numMaxRegistration = null;
 
     #[ORM\Column(length: 6000)]
-    #[Assert\Length(
-        min: 10,
-        max: 6000,
+    /*#[Assert\Length(
+        min:10,
+        max:6000,
         minMessage: "Minimum {{ limit }} character please !",
         maxMessage: "Maximum {{ limit }} characters please !"
-    )]
+    )]*/
     private ?string $infoEvent = null;
 
     #[ORM\ManyToOne(inversedBy: 'events')]
@@ -68,12 +68,12 @@ class Event
     private Collection $users;
 
     #[ORM\Column(length: 6000, nullable: true)]
-    #[Assert\Length(
-        min: 10,
-        max: 6000,
+    /*#[Assert\Length(
+        min:10,
+        max:6000,
         minMessage: "Minimum {{ limit }} character please !",
         maxMessage: "Maximum {{ limit }} characters please !"
-    )]
+    )]*/
     private ?string $deleteComment = null;
 
     public function __construct()

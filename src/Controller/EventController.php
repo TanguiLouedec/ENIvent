@@ -23,12 +23,10 @@ class EventController extends AbstractController
     public function add(EventRepository $eventRepository, Request $request, EntityManagerInterface $entityManager)
     {
 
-
         $event = new Event();
-
         $eventForm = $this->createForm(EventType::class, $event);
         $eventForm->handleRequest($request);
-
+        $userCampus= $this->getUser()->getCampus()->getName();
         if ($eventForm->isSubmitted() && $eventForm->isValid()) {
             $state = new State();
 //            $location = $locationRepository->find($eventForm->get('location')->getData());
@@ -44,7 +42,7 @@ class EventController extends AbstractController
             $this->addFlash('success', 'Event successfully added !');
             return $this->redirectToRoute('event_detail', ['id' => $event->getId()]);
         }
-        return $this->render('event/add.html.twig', ['eventForm' => $eventForm->createView()]);
+        return $this->render('event/add.html.twig', ['eventForm' => $eventForm->createView(), 'userCampus' => $userCampus]);
     }
 
     #[Route('/detail/{id}', name: 'detail')]
@@ -67,20 +65,20 @@ class EventController extends AbstractController
         $event = $eventRepository->find($id);
         $eventForm = $this->createForm(EventType::class, $event);
         $eventForm->handleRequest($request);
+        $userCampus= $this->getUser()->getCampus()->getName();
 
         if ($eventForm->isSubmitted() && $eventForm->isValid()) {
-            $state = new State();
+            $state = $event->getState();
             if ($eventForm->getClickedButton() === $eventForm->get('save')) {
                 $state->setTag('saved');
-            }else if($eventForm->getClickedButton() === $eventForm->get('open')) {
+            } else if ($eventForm->getClickedButton() === $eventForm->get('open')) {
                 $state->setTag('open');
             }
-            $event->setState($state);
             $eventRepository->save($event, true);
             $this->addFlash('success', 'Event successfully updated !');
             return $this->redirectToRoute('event_detail', ['id' => $event->getId()]);
         }
-        return $this->render('event/update.html.twig', ['eventFormUpdate' => $eventForm->createView(), 'event' => $event]);
+        return $this->render('event/update.html.twig', ['eventFormUpdate' => $eventForm->createView(), 'event' => $event, 'userCampus' =>$userCampus]);
     }
 
     #[Route('/cancel/{id}', name: 'cancel')]
@@ -91,16 +89,14 @@ class EventController extends AbstractController
         $eventCancelForm->handleRequest($request);
 
         if ($eventCancelForm->isSubmitted() && $eventCancelForm->isValid()) {
-            $state = new State();
+            $state = $event->getState();
             $state->setTag('cancelled');
-            $event->setState($state);
             $eventRepository->save($event, true);
-            $this->addFlash('success', $event->getName() . "has been canceled");
+            $this->addFlash('success', "The event " . $event->getName() . " has been canceled");
             return $this->redirectToRoute('event_detail', ['id' => $event->getId()]);
         }
         return $this->render('event/cancel.html.twig', ['eventCancelForm' => $eventCancelForm->createView(), 'event' => $event]);
     }
-
 
 
 }

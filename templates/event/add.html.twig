@@ -12,8 +12,7 @@
     {{ form_row(eventForm.dateLimitRegistration) }}
     {{ form_row(eventForm.numMaxRegistration) }}
     {{ form_row(eventForm.duration) }}
-    {{ form_row(eventForm.infoEvent) }}
-    {{ form_row(eventForm.campus) }}
+    <div>Campus : {{ userCampus }} </div>
     {{ form_row(eventForm.city) }}
     {{ form_row(eventForm.location) }}
     <a href="{{ path('location_add') }}" class="btn btn-primary" id="addLocationButton" target="_blank">Add new
