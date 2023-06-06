@@ -21,21 +21,23 @@ class ProfileController extends AbstractController
     public function index(): Response
     {
         $user = $this->getUser();
+        $actualUser = $this->getUser()->getId();
 
         return $this->render('profile/profile.html.twig', [
-            'user' => $user
+            'user' => $user, 'actualUser'=>$actualUser
         ]);
     }
 
-    /*#[Route('/profile/{id}', name: 'app_profile')]
+    #[Route('/profile/{id}', name: 'app_profile')]
     public function seeProfile(int $id, UserRepository $userRepository): Response
     {
+        $actualUser = $this->getUser()->getId();
         $user = $userRepository->find($id);
         if (!$user) {
             throw $this->createNotFoundException("Oops! User not found");
         }
-        return $this->render('profile/profile.html.twig', ['user' => $user]);
-    }*/
+        return $this->render('profile/profile.html.twig', ['user' => $user, 'actualUser'=>$actualUser]);
+    }
 
     #[Route('/profile/update', name: 'profile_update')]
     public function update(
@@ -71,7 +73,7 @@ class ProfileController extends AbstractController
 
             $userRepository->save($user, true);
             $this->addFlash('success', 'Profil successfully updated !');
-            return $this->redirectToRoute('app_profile', ['id' => $user->getId()]);
+            return $this->redirectToRoute('app_myprofile', ['id' => $user->getId()]);
         }
         return $this->render('profile/update.html.twig', ['userFormUpdate' => $userForm->createView(), 'user' => $user]);
     }

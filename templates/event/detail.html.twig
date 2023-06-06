@@ -31,7 +31,7 @@
     <div>
         <h2>List of attendees</h2>
         {% for user in event.users %}
-            <div>Name : {{ user.firstName ~" "~ user.lastName }}- Nickname : {{ user.nickname }}</div>
+            <div>Name : <a class="link_button" href="{{ path('app_profile', {'id':user.id}) }}"> {{ user.firstName ~" "~ user.lastName }}- Nickname : {{ user.nickname }}</a></div>
         {% endfor %}
     </div>
 
