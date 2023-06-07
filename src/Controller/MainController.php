@@ -2,8 +2,10 @@
 
 namespace App\Controller;
 
+use App\Entity\HomeFilter;
 use App\Form\HomeFilterType;
 use App\Repository\EventRepository;
+use App\Repository\HomeFilterRepository;
 use App\Repository\StateRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -19,8 +21,6 @@ class MainController extends AbstractController
             Request $request,
         ): Response
     {
-        $researchForm = $this->createForm(HomeFilterType::class);
-
         $event = $eventRepository->findAll();
         $state = $stateRepository->findOneBy(['tag'=>'closed']);
         $now = new \DateTime('now');
@@ -40,27 +40,16 @@ class MainController extends AbstractController
         $filterForm->handleRequest($request);
 
         if ($filterForm->isSubmitted() && $filterForm->isValid()) {
-
-            $qb = $eventRepository->createQueryBuilder('eq');
-            $campus = $filterForm->get('campus')->getData();
-            $beginDate = $filterForm->get('startDate')->getData();
-            $endDate = $filterForm->get('endDate')->getData();
-            $searchField = $filterForm->get('searchField')->getData();
-            $user = $this->getUser();
-
-            if($campus) {
-                $qb->leftJoin('eq.campus', 'camp');
-                $qb->addSelect('camp');
-            }
+            //$event = $eventRepository->findByFilters($filterForm);
             return $this->render('main/home.html.twig', [
-                'events'=>$qb,
-                'researchForm' => $researchForm->createView()
+               'events' => $event,
+               'researchForm' => $filterForm->createView()
+            ]);
+        } else {
+            return $this->render('main/home.html.twig', [
+                'events' => $event,
+                'researchForm' => $filterForm->createView()
             ]);
         }
-
-        return $this->render('main/home.html.twig', [
-            'events'=>$event,
-            'researchForm' => $researchForm->createView()
-            ]);
     }
 }

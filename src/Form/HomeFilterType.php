@@ -29,29 +29,36 @@ class HomeFilterType extends AbstractType
                     return $qb;
                 },
                 'placeholder' => 'Campus',
-                'label' => 'Campus :'
+                'label' => 'Campus :',
+                'required' => false,
             ])
             ->add('startDate', DateType::class, [
                 'label' => 'Starting :',
                 'html5' => true,
-                'widget' => 'single_text'
+                'widget' => 'single_text',
+                'required' => false,
             ])
             ->add('endDate', DateType::class, [
                 'label' => 'Ending :',
                 'html5' => true,
-                'widget' => 'single_text'
+                'widget' => 'single_text',
+                'required' => false,
             ])
             ->add('isOrganised', CheckboxType::class, [
-                'label' => 'I created this event'
+                'label' => 'I created this event',
+                'required' => false,
             ])
             ->add('isSubed', CheckboxType::class, [
-                'label' => "I'm part of this event"
+                'label' => "I'm part of this event",
+                'required' => false,
             ])
             ->add('isNotSubed', CheckboxType::class, [
-                'label' => "I'm not part of this event"
+                'label' => "I'm not part of this event",
+                'required' => false,
             ])
             ->add('isOver', CheckboxType::class, [
-                'label' => 'The event is over'
+                'label' => 'The event is over',
+                'required' => false,
             ])
         ;
     }
