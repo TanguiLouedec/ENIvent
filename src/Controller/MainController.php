@@ -32,8 +32,8 @@ class MainController extends AbstractController
         foreach ($event as $e){
 
             $dateTimeStart = $e->getDateTimeStart();
-
-            if (($dateTimeStart->modify('+1 month')) < $now) {
+            $dateTimeStartPlusMonth =($dateTimeStart->modify('+1 month'));
+            if ($dateTimeStartPlusMonth < $now) {
 
                 $e->setState($state);
                 $eventRepository->save($e, true);
@@ -67,6 +67,7 @@ class MainController extends AbstractController
             'researchForm' => $researchForm->createView(),
             'user' =>$user,
             'allUsers' =>$allUsers,
+            'now' => $now
             ]);
     }
 }
