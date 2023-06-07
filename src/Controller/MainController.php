@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Form\HomeFilterType;
 use App\Repository\EventRepository;
 use App\Repository\StateRepository;
+use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -16,6 +17,7 @@ class MainController extends AbstractController
         public function list(
             EventRepository $eventRepository,
             StateRepository $stateRepository,
+            UserRepository $userRepository,
             Request $request,
         ): Response
     {
@@ -25,6 +27,7 @@ class MainController extends AbstractController
         $state = $stateRepository->findOneBy(['tag'=>'closed']);
         $now = new \DateTime('now');
         $user = $this->getUser();
+        $allUsers = $userRepository->findAll();
 
         foreach ($event as $e){
 
@@ -62,7 +65,8 @@ class MainController extends AbstractController
         return $this->render('main/home.html.twig', [
             'events'=>$event,
             'researchForm' => $researchForm->createView(),
-            'user' => $user
+            'user' =>$user,
+            'allUsers' =>$allUsers,
             ]);
     }
 }
