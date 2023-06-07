@@ -5,34 +5,68 @@
 {% endblock %}
 
 {% block body %}
+    <div class="flex flex-row gap-8">
+        <article class="w-fit mt-8 p-8 flex flex-col gap-4 bg-gray-100 rounded-md shadow-md">
+            <h3 class="text-xl font-bold">{{ event.name }}
+                <span class="text-sm align-self-center text-gray-500">({{ event.state.tag }})</span>
+            </h3>
+            <div class="flex flex-col gap-4">
+                {% if event.state.tag == 'cancelled' %}
+                    <h2>L'événement a été annulé pour les raisons suivantes : </h2>
+                    <div>{{ event.deleteComment }}</div>
+                {% endif %}
 
-    <h3>{{ event.name }}</h3>
-    {% if event.state.tag == 'cancelled' %}
-        <h2>L'événement a été annulé pour les raisons suivantes : </h2>
-        <div>{{ event.deleteComment }}</div>
-    {% endif %}
-    <div>Event date & time : {{ event.dateTimeStart | date('d-m-Y') }}</div>
-    <div>Event status : {{ event.state.tag }}</div>
-    <div>Event limit registration date : {{ event.dateLimitRegistration | date('d-m-Y') }}</div>
-    <div>Number of places : {{ event.numMaxRegistration }} </div>
-    <div>Event duration : {{ event.duration }} </div>
-    <div>Description & information : {{ event.infoEvent }} </div>
-    <div>Campus : {{ event.campus.name }} </div>
-    <div>Location : {{ event.location.name }} </div>
-    <div>City : {{ event.location.city.name }} </div>
-    <div>Street : {{ event.location.street }} </div>
-    <div>Zip Code : {{ event.location.city.zipCode }} </div>
-    <div>Latitude : {{ event.location.latitude }} </div>
-    <div>Longitude : {{ event.location.longitude}} </div>
-    {% block button %}
-        <a class="link_button" href="{{ path('event_update', {'id':event.id}) }}">Edit Event</a>
-    {% endblock %}
+                <fieldset class="w-96 p-4 flex flex-col gap-4 border border-yellow-500 rounded-md">
+                    <legend class="text-yellow-500 ml-2 pl-2 pr-2">What</legend>
+                    <p>{{ event.infoEvent }}</p>
+                </fieldset>
 
-    <div>
-        <h2>List of attendees</h2>
-        {% for user in event.users %}
-            <div>Name : <a class="link_button" href="{{ path('app_profile', {'id':user.id}) }}"> {{ user.firstName ~" "~ user.lastName }}- Nickname : {{ user.nickname }}</a></div>
-        {% endfor %}
+                <fieldset class="w-96 p-4 flex flex-col gap-4 border border-orange-500 rounded-md">
+                    <legend class="text-orange-500 ml-2 pl-2 pr-2">When</legend>
+                    <div>Event date & time : {{ event.dateTimeStart | date('d-m-Y') }}</div>
+
+                    <div>Event limit registration date : {{ event.dateLimitRegistration | date('d-m-Y') }}</div>
+                    <div>Number of places : {{ event.numMaxRegistration }} </div>
+                    <div>Event duration : {{ event.duration }} </div>
+                </fieldset>
+
+                <fieldset class="w-96 p-4 flex flex-col gap-4 border border-teal-700 rounded-md">
+                    <legend class="text-teal-700 ml-2 pl-2 pr-2">Where</legend>
+                    {#                <div>Campus : {{ event.campus.name }} </div>#}
+                    <div class="">{{ event.location.name }}, {{ event.location.street }}, {{ event.location.city.zipCode }}, {{ event.location.city.name }}</div>
+                    <div class="flex flex-row gap-4">
+                        <div>Latitude : {{ event.location.latitude }} </div>
+                        <div>Longitude : {{ event.location.longitude}} </div>
+                    </div>
+                </fieldset>
+            </div>
+            {% if app.user.id == event.owner.id %}
+                <a class="link_button self-center" href="{{ path('event_update', {'id':event.id}) }}"><button class="w-32 flex flex-col items-center justify-center h-10 p-2 self-center border-2 border-blue-600 rounded-md hover:bg-blue-600 hover:text-white">Edit</button></a>
+            {% endif %}
+        </article>
+        <div class="w-fit h-fit mt-8 p-8 flex flex-col gap-4 bg-gray-100 rounded-md shadow-md">
+            <fieldset class="w-96 p-4 flex flex-col gap-4 border border-blue-600 rounded-md">
+                <legend class="text-blue-600 ml-2 pl-2 pr-2">Who</legend>
+                {% for user in event.users %}
+                    <div class="h-16 flex flex-row gap-4 items-center">
+                        <img class="h-full aspect-square rounded-full border border-blue-600" src="/ENIvent/public/img/profilePictures/{{ user.profilePicture }}" alt="{{ user.nickname }} profile picture">
+                        <a href=""><h3>@{{ user.nickname }}</h3></a>
+                        {% if event.owner.id == user.id %}
+                            <p class="text-gray-500">(owner)</p>
+                        {% endif %}
+                    </div>
+                {% endfor %}
+            </fieldset>
+        </div>
     </div>
+
+
+
+
+
+
+
+
+
 
 {% endblock %}
