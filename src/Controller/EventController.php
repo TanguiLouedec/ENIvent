@@ -98,6 +98,19 @@ class EventController extends AbstractController
         }
         return $this->render('event/cancel.html.twig', ['eventCancelForm' => $eventCancelForm->createView(), 'event' => $event]);
     }
-
-
+    #[Route('/publish/{id}', name: 'publish')]
+    public function publish(int $id, EventRepository $eventRepository, Request $request)
+    {
+    $event = $eventRepository->find($id);
+    $state = $event->getState();
+        if ($state->getTag() != 'published')
+        {
+            $state->setTag('open');
+            $eventRepository->save($event, true);
+            $this->addFlash('success', 'Event successfully updated !');
+        } else {
+            $this->addFlash('error', 'Event already published !');
+        }
+        return $this->redirectToRoute('main_home');
+    }
 }

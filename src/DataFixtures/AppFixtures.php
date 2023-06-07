@@ -119,7 +119,7 @@ class AppFixtures extends Fixture
 
 
         $state1 = new State();
-        $state1->setTag("created");
+        $state1->setTag("saved");
 
         $state2 = new State();
         $state2->setTag("open");
