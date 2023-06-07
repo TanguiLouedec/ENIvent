@@ -26,9 +26,10 @@ class EventController extends AbstractController
         $event = new Event();
         $eventForm = $this->createForm(EventType::class, $event);
         $eventForm->handleRequest($request);
-        $userCampus= $this->getUser()->getCampus()->getName();
+        $userCampusName= $this->getUser()->getCampus()->getName();
+        $userCampus= $this->getUser()->getCampus();
         if ($eventForm->isSubmitted() && $eventForm->isValid()) {
-            $state = new State();
+            $state = $event->getState();
 //            $location = $locationRepository->find($eventForm->get('location')->getData());
 //            $event->setLocation($location);
             if ($eventForm->getClickedButton() === $eventForm->get('save')) {
@@ -36,13 +37,13 @@ class EventController extends AbstractController
             } else {
                 $state->setTag('open');
             }
-            $event->setState($state);
+            $event->setCampus($userCampus);
             $entityManager->persist($event);
             $entityManager->flush();
             $this->addFlash('success', 'Event successfully added !');
             return $this->redirectToRoute('event_detail', ['id' => $event->getId()]);
         }
-        return $this->render('event/add.html.twig', ['eventForm' => $eventForm->createView(), 'userCampus' => $userCampus]);
+        return $this->render('event/add.html.twig', ['eventForm' => $eventForm->createView(), 'userCampus' => $userCampusName]);
     }
 
     #[Route('/detail/{id}', name: 'detail')]
