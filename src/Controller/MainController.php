@@ -24,6 +24,7 @@ class MainController extends AbstractController
         $event = $eventRepository->findAll();
         $state = $stateRepository->findOneBy(['tag'=>'closed']);
         $now = new \DateTime('now');
+        $user = $this->getUser();
 
         foreach ($event as $e){
 
@@ -60,7 +61,8 @@ class MainController extends AbstractController
 
         return $this->render('main/home.html.twig', [
             'events'=>$event,
-            'researchForm' => $researchForm->createView()
+            'researchForm' => $researchForm->createView(),
+            'user' => $user
             ]);
     }
 }

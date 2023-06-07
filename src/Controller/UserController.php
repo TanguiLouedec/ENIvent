@@ -27,7 +27,6 @@ class UserController extends AbstractController
         int $id
     ): Response
     {
-
         $event = $eventRepository->find($id);
         $user = $this->getUser();
         $eventState = $event->getState();
@@ -37,20 +36,23 @@ class UserController extends AbstractController
         $eventUsers = $event->getUsers();
         $currentParticipants = count($eventUsers);
         $today = new \DateTime('now');
+        $verifUser = $eventUsers ->contains($user);
 
-
-
-        if ($currentEventState == 'open' && $eventDateLimit > $today && $eventParticipantsLimit > $currentParticipants) {
+        if ($currentEventState == 'open' && $eventDateLimit > $today && $eventParticipantsLimit > $currentParticipants && !$verifUser) {
 
             $user->addEvent($event);
             $userRepository->save($user, true);
 
             $this->addFlash('success', 'You subscribed to the event !');
-            return $this->redirectToRoute('event_detail', ['id' => $event->getId()]);
-        } else {
+            return $this->redirectToRoute('event_detail', ['id' => $event->getId(),]);
+        }
+        else
+        {
             $this->addFlash('error', 'You dont meet the requirements to subscribe !');
             return $this->redirectToRoute('main_home');
         }
+
+
     }
     #[Route('/user/cancel/{id}', name: 'user_cancel', requirements : ["id"=> "\d+"])]
     public function cancel(
@@ -79,5 +81,6 @@ class UserController extends AbstractController
         return $this->redirectToRoute('main_home');
     }
     }
+
 
 }

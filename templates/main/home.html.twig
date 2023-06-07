@@ -54,21 +54,26 @@
                 <div class="h-16 pl-4 pr-4 flex items-center">
 
                     <a>
+
+                    </a>
+
+                    <a>
                         {{ event.userCount(event.id) }}/{{ event.numMaxRegistration }}
                     </a>
                     <a href="{{ path('event_detail', {'id': event.id}) }}"
                         title="View details about this event"> {{ event.name }}
                     </a>
+                    {% for participant in event.users %}
+                        {% if user == participant %}
+                            <a>X</a>
+                        {% endif %}
+                    {% endfor %}
                     <a href="{{ path('user_apply', {'id': event.id}) }}">
                         - Apply for this event
                     </a>
                     <a href="{{ path('user_cancel', {'id': event.id}) }}"
                         title="View details about this event"> Cancel subscription
                     </a>
-
-
-
-
                 </div>
             {% endfor %}
         </div>
