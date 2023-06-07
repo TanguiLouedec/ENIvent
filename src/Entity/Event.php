@@ -76,6 +76,9 @@ class Event
     )]*/
     private ?string $deleteComment = null;
 
+    #[ORM\ManyToOne(inversedBy: 'eventsOwned')]
+    private ?User $owner = null;
+
     public function __construct()
     {
         $this->users = new ArrayCollection();
@@ -235,4 +238,24 @@ class Event
         $eventUsers = $this->getUsers();
         return count($eventUsers);
     }
+
+    public function getOwner(): ?User
+    {
+        return $this->owner;
+    }
+
+    public function setOwner(?User $owner): self
+    {
+        $this->owner = $owner;
+
+        return $this;
+    }
+
+
+    public function getOwnerName(): ?string
+    {
+        return $this->owner->getNickname();
+    }
+
+
 }

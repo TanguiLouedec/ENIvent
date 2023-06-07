@@ -53,22 +53,51 @@
             {% for event in events %}
                 <div class="h-16 pl-4 pr-4 flex items-center">
 
-                    <a>
+                    <div>
+                        {{ event.name }}
+                    </div>
+                    <div>
+                        {{ event.dateTimeStart | date("d/m/y H:i") }}
+                    </div>
+                    <div>
+                        {{ event.dateLimitRegistration | date("d/m/Y") }}
+                    </div>
+                    <div>
                         {{ event.userCount(event.id) }}/{{ event.numMaxRegistration }}
-                    </a>
-                    <a href="{{ path('event_detail', {'id': event.id}) }}"
-                        title="View details about this event"> {{ event.name }}
-                    </a>
+                    </div>
+                    <div>
+                        {{ event.state.tag }}
+                    </div>
+                        {% for participant in event.users %}
+                            {% if user == participant %}
+                                <div>X</div>
+                            {% endif %}
+                        {% endfor %}
+                    <div>
+                        {% if event.owner == app.user %}
+                            <a href="{{ path('app_myprofile', {'id': app.user.id}) }}">{{ app.user.nickname }}</a>
+                            {% else %}
+                                <a href="{{ path('app_profile', {'id' : event.owner.id}) }}">{{ event.owner.nickname }}</a>
+                        {% endif %}
+                    </div>
+                        {% if event.owner == app.user %}
+                            <a href="{{ path('event_detail', {'id': event.id}) }}"
+                                title="Modify this event">
+                                    Modify
+                            </a>
+                        {% else %}
+                            <a href="{{ path('event_detail', {'id': event.id}) }}"
+                                title="View details about this event">
+                                    Show details
+                            </a>
+                        {% endif %}
+
                     <a href="{{ path('user_apply', {'id': event.id}) }}">
-                        - Apply for this event
+                        Apply for this event
                     </a>
                     <a href="{{ path('user_cancel', {'id': event.id}) }}"
                         title="View details about this event"> Cancel subscription
                     </a>
-
-
-
-
                 </div>
             {% endfor %}
         </div>

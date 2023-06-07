@@ -56,9 +56,13 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 255)]
     private ?string $nickname = null;
 
+    #[ORM\OneToMany(mappedBy: 'owner', targetEntity: Event::class)]
+    private Collection $eventsOwned;
+
     public function __construct()
     {
         $this->events = new ArrayCollection();
+        $this->eventsOwned = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -257,6 +261,36 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setNickname(string $nickname): self
     {
         $this->nickname = $nickname;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Event>
+     */
+    public function getEventsOwned(): Collection
+    {
+        return $this->eventsOwned;
+    }
+
+    public function addEventsOwned(Event $eventsOwned): self
+    {
+        if (!$this->eventsOwned->contains($eventsOwned)) {
+            $this->eventsOwned->add($eventsOwned);
+            $eventsOwned->setOwner($this);
+        }
+
+        return $this;
+    }
+
+    public function removeEventsOwned(Event $eventsOwned): self
+    {
+        if ($this->eventsOwned->removeElement($eventsOwned)) {
+            // set the owning side to null (unless already changed)
+            if ($eventsOwned->getOwner() === $this) {
+                $eventsOwned->setOwner(null);
+            }
+        }
 
         return $this;
     }

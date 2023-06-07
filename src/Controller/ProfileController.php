@@ -23,8 +23,11 @@ class ProfileController extends AbstractController
         $user = $this->getUser();
         $actualUser = $this->getUser()->getId();
 
+        // Generate the URL with the user ID
+        $profileUrl = $this->generateUrl('app_profile', ['id' => $actualUser]);
+
         return $this->render('profile/profile.html.twig', [
-            'user' => $user, 'actualUser'=>$actualUser
+            'user' => $user, 'actualUser'=>$actualUser, 'profileUrl' => $profileUrl
         ]);
     }
 
