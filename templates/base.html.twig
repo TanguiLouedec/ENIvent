@@ -14,13 +14,14 @@
         <header>
             {{ include('menu/navbar.html.twig') }}
         </header>
+
         {% for message in app.flashes('success') %}
-            <div class="alert alert-success">
+            <div class="absolute top-4 left-96 h-8 p-4 w-fit flex flex-row items-center justify-center rounded bg-green-600 text-white">
                 {{ message }}
             </div>
         {% endfor %}
         {% for message in app.flashes('error') %}
-            <div class="alert alert-error">
+            <div class="absolute top-4 left-96 h-8 p-4 w-fit flex flex-row items-center justify-center rounded bg-red-600 text-white">
                 {{ message }}
             </div>
         {% endfor %}
